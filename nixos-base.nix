@@ -118,7 +118,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "lapcat";
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Riga";
 
