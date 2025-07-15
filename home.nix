@@ -1,6 +1,14 @@
 { config, pkgs, ... }:
 
+let
+  agenix = builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz";
+in
 {
+  imports = [ 
+    ./service.nix
+    "${agenix}/modules/age-home.nix"
+  ];
+
   home.username = "mbrock";
   home.homeDirectory = "/home/mbrock";
   home.sessionPath = ["${config.home.homeDirectory}/.local/bin"];
@@ -8,6 +16,9 @@
   home.packages = [
     pkgs.ghostty
     pkgs.libnotify
+    pkgs.font-manager
+    pkgs.age
+    pkgs.ragenix
   ];
 
   home.file.".npmrc".text = ''
@@ -35,7 +46,7 @@
       border-color = "#335577";
       background-color = "#000000";
       text-color = "#FFFFFF";
-      font = "input mono compressed 18";
+      font = "iosevka term extended 18";
       padding = "20";
       width = 700;
       anchor = "center";
@@ -43,6 +54,14 @@
   };
 
   fonts.fontconfig.enable = true;
+
+  # Age secrets configuration
+  age.secrets.nt-api-keys = {
+    file = ./secrets/nt-api-keys.age;
+  };
+  
+  # Configure agenix to use SSH keys
+  age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
 
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager

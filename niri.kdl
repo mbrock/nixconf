@@ -1,3 +1,4 @@
+
 input {
     keyboard {
         xkb {
@@ -15,12 +16,12 @@ input {
 }
 
 output "Virtual-1" {
-    scale 1.7
+    scale 1.4
     transform "normal"
 }
 
 layout {
-    gaps 8
+    gaps 16
     background-color "#000000"
     center-focused-column "on-overflow"
     preset-column-widths {
@@ -36,18 +37,16 @@ layout {
     }
 
     border {
-        width 6
-        inactive-color "#303044"
+        width 8
+        inactive-color "#30304400"
         urgent-color "#9b0000"
-	active-color "#003355"
-
-//        active-gradient from="#002244" to="#00557777" angle=0
+	active-color "#005577"
+//        active-gradient from="#0ff5" to="#0af5" angle=45 in="oklch longer hue"
     }
 
     shadow {
-        on
         softness 200
-        spread 100
+        spread 40
         offset x=0 y=0
         color "#0008"
     }
@@ -55,7 +54,7 @@ layout {
     struts {
         left 0
         right 0
-        top 0
+        top 4
         bottom 0
     }
 }
@@ -71,10 +70,7 @@ window-rule {
 
 window-rule {
     match app-id="ghostty.build"
-    default-column-width { proportion 0.6; }
-    default-window-height { proportion 0.4; }
-    open-floating true
-    opacity 0.8
+    open-floating false
     border {
       width 12
       active-gradient from="#f00f" to="#0f05" angle=45 in="oklch longer hue"
@@ -94,26 +90,22 @@ binds {
     Mod+B hotkey-overlay-title="Chromium" { spawn "chromium"; }
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+Return hotkey-overlay-title="Build Config: make in ~/conf" { spawn "ghostty" "--class=ghostty.build" "--font-size=18" "--background=#001122" "-e" "conf-build"; }
-    Mod+E { spawn "emacs"; }
+    Mod+E { spawn "emacs" "--internal-border=12"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
 
     Mod+O repeat=false { toggle-overview; }
 
     Mod+Q { close-window; }
 
-    Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
-    Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-down; }
     Mod+K     { focus-window-up; }
     Mod+L     { focus-column-right; }
 
-    Mod+Ctrl+Left  { move-column-left; }
-    Mod+Ctrl+Down  { move-window-down; }
-    Mod+Ctrl+Up    { move-window-up; }
-    Mod+Ctrl+Right { move-column-right; }
+    Mod+Left  { move-column-left; }
+    Mod+Down  { move-window-down; }
+    Mod+Up    { move-window-up; }
+    Mod+Right { move-column-right; }
     Mod+Ctrl+H     { move-column-left; }
     Mod+Ctrl+J     { move-window-down; }
     Mod+Ctrl+K     { move-window-up; }
@@ -159,7 +151,7 @@ binds {
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
     Mod+F { maximize-column; }
-    Mod+Shift+F { fullscreen-window; }
+    Mod+Shift+F { toggle-windowed-fullscreen; }
 
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".

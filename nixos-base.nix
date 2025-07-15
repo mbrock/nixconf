@@ -8,6 +8,8 @@
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       e: with e; [
         nix-mode paredit lsp-bridge sweeprolog sly
+        envrc
+        vertico orderless consult embark marginalia
       ]))
     sbcl
     nodejs_24
@@ -22,13 +24,13 @@
     libnotify
     chromium
     ripgrep
+    open-vm-tools
     
     # Build script for make with conditional window behavior
     (writeShellScriptBin "conf-build" ''
       cd ~/conf
       echo "Building configuration..."
       if make; then
-        sleep 2
         exit 0
       else
         echo "❌ Build failed!"
@@ -133,6 +135,9 @@
     jetbrains-mono input-fonts
   ];
 
+  fonts.fontconfig.enable = true;
+  fonts.fontconfig.hinting.enable = false;
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.input-fonts.acceptLicense = true;
 
@@ -151,5 +156,7 @@
   security.sudo.wheelNeedsPassword = false;
 
   system.stateVersion = "25.05"; # never change or delete
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
 
