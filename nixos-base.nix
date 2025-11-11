@@ -344,8 +344,8 @@
       color11 #ffd700
 
       # Blue
-      color4 #6495ed
-      color12 #87ceeb
+      color4 #8ab4f8
+      color12 #aecbfa
 
       # Magenta
       color5 #ba55d3
