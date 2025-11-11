@@ -1,11 +1,14 @@
+// ============================================================================
+// INPUT CONFIGURATION
+// ============================================================================
 
 input {
     keyboard {
         xkb {
             layout "us"
-	    variant "dvorak"
+            variant "dvorak"
+            options "altwin:swap_alt_win"
         }
-
         numlock
     }
 
@@ -15,109 +18,166 @@ input {
     }
 }
 
+// ============================================================================
+// OUTPUT CONFIGURATION
+// ============================================================================
+
 output "Virtual-1" {
     scale 1.4
     transform "normal"
 }
 
+// ============================================================================
+// LAYOUT & APPEARANCE
+// ============================================================================
+
 layout {
-    gaps 16
-    background-color "#000000"
+    gaps 20
+    background-color "#1a1510"
     center-focused-column "on-overflow"
+
+    // Column width presets (Mod+R to cycle)
     preset-column-widths {
         proportion 0.25
         proportion 0.5
         proportion 0.66667
     }
 
-    default-column-width { proportion 0.25; }
+    default-column-width { proportion 0.5; }
 
+    // Focus ring with golden glow
     focus-ring {
-    	off
+        width 3
+        active-color "#d4a574"
+        inactive-color "#4a3f2f"
     }
 
+    // Window borders with golden gradient
     border {
-        width 8
-        inactive-color "#30304400"
-        urgent-color "#9b0000"
-	active-color "#005577"
-//        active-gradient from="#0ff5" to="#0af5" angle=45 in="oklch longer hue"
+        width 2
+        inactive-color "#2a2319"
+        active-gradient from="#daa520" to="#cd853f" angle=135 in="oklch longer hue"
+        urgent-color "#ff6347"
     }
 
+    // Elevated drop shadow with warm tint
     shadow {
-        softness 200
-        spread 40
-        offset x=0 y=0
-        color "#0008"
+        softness 40
+        spread 8
+        offset x=0 y=8
+        color "#0000009f"
     }
 
+    // Screen margins
     struts {
         left 0
         right 0
-        top 4
+        top 8
         bottom 0
     }
 }
 
+// ============================================================================
+// GENERAL SETTINGS
+// ============================================================================
+
 prefer-no-csd
 screenshot-path "~/Pictures/Screenshots/%Y-%m/%H%M%S.png"
 
+animations {
+    off
+}
+
+// ============================================================================
+// WINDOW RULES
+// ============================================================================
+
+// Default window appearance
 window-rule {
-    geometry-corner-radius 8
+    geometry-corner-radius 12
     clip-to-geometry true
     tiled-state true
 }
 
+// Special rule for configuration build window
 window-rule {
-    match app-id="ghostty.build"
+    match title="conf-build"
     open-floating false
-    border {
-      width 12
-      active-gradient from="#f00f" to="#0f05" angle=45 in="oklch longer hue"
-    }
-
     geometry-corner-radius 12
+    border {
+        width 3
+        active-gradient from="#f4a460" to="#daa520" angle=135 in="oklch longer hue"
+    }
 }
 
+// ============================================================================
+// STARTUP & ENVIRONMENT
+// ============================================================================
+
 spawn-at-startup "xwayland-satellite"
+spawn-at-startup "swaybg" "-i" "/home/mbrock/Pictures/wallpaper.jpg" "-m" "fill"
+
 environment {
     DISPLAY ":0"
 }
 
+// ============================================================================
+// KEYBINDINGS
+// ============================================================================
+
 binds {
+    // Help
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+B hotkey-overlay-title="Chromium" { spawn "chromium"; }
-    Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
-    Mod+Return hotkey-overlay-title="Build Config: make in ~/conf" { spawn "ghostty" "--class=ghostty.build" "--font-size=18" "--background=#001122" "-e" "conf-build"; }
-    Mod+E { spawn "emacs" "--internal-border=12"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    // ────────────────────────────────────────────────────────────────────────
+    // Application Launchers
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+B      hotkey-overlay-title="Chromium"                    { spawn "chromium"; }
+    Mod+T      hotkey-overlay-title="Open a Terminal: kitty"      { spawn "kitty"; }
+    Mod+E                                                          { spawn "emacs" "--internal-border=12"; }
+    Mod+D      hotkey-overlay-title="Run an Application: fuzzel"  { spawn "fuzzel"; }
+    Mod+Return hotkey-overlay-title="Build Config: make in ~/conf" {
+        spawn "kitty" "--title=conf-build" "-o" "font_size=18" "-o" "background=#001122" "conf-build";
+    }
 
+    // ────────────────────────────────────────────────────────────────────────
+    // Window Management
+    // ────────────────────────────────────────────────────────────────────────
     Mod+O repeat=false { toggle-overview; }
+    Mod+Q              { close-window; }
+    Mod+Tab            { focus-window-previous; }
 
-    Mod+Q { close-window; }
+    // ────────────────────────────────────────────────────────────────────────
+    // Focus Navigation (Vim-style)
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+H { focus-column-left; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+    Mod+L { focus-column-right; }
 
-    Mod+H     { focus-column-left; }
-    Mod+J     { focus-window-down; }
-    Mod+K     { focus-window-up; }
-    Mod+L     { focus-column-right; }
-
-    Mod+Left  { move-column-left; }
-    Mod+Down  { move-window-down; }
-    Mod+Up    { move-window-up; }
-    Mod+Right { move-column-right; }
+    // ────────────────────────────────────────────────────────────────────────
+    // Window Movement
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+Left       { move-column-left; }
+    Mod+Down       { move-window-down; }
+    Mod+Up         { move-window-up; }
+    Mod+Right      { move-column-right; }
     Mod+Ctrl+H     { move-column-left; }
     Mod+Ctrl+J     { move-window-down; }
     Mod+Ctrl+K     { move-window-up; }
     Mod+Ctrl+L     { move-column-right; }
 
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
-    Mod+Ctrl+U         { move-column-to-workspace-down; }
-    Mod+Ctrl+I         { move-column-to-workspace-up; }
-    Mod+Shift+U         { move-workspace-down; }
-    Mod+Shift+I         { move-workspace-up; }
+    // ────────────────────────────────────────────────────────────────────────
+    // Workspace Navigation
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+U       { focus-workspace-down; }
+    Mod+I       { focus-workspace-up; }
+    Mod+Ctrl+U  { move-column-to-workspace-down; }
+    Mod+Ctrl+I  { move-column-to-workspace-up; }
+    Mod+Shift+U { move-workspace-down; }
+    Mod+Shift+I { move-workspace-up; }
 
+    // Workspace switching (1-9)
     Mod+1 { focus-workspace 1; }
     Mod+2 { focus-workspace 2; }
     Mod+3 { focus-workspace 3; }
@@ -127,6 +187,8 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
+
+    // Move window to workspace (1-9)
     Mod+Ctrl+1 { move-column-to-workspace 1; }
     Mod+Ctrl+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
@@ -137,86 +199,59 @@ binds {
     Mod+Ctrl+8 { move-column-to-workspace 8; }
     Mod+Ctrl+9 { move-column-to-workspace 9; }
 
-    Mod+Tab { focus-window-previous; }
-
+    // ────────────────────────────────────────────────────────────────────────
+    // Column & Window Manipulation
+    // ────────────────────────────────────────────────────────────────────────
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Comma        { consume-window-into-column; }
+    Mod+Period       { expel-window-from-column; }
 
-    // Consume one window from the right to the bottom of the focused column.
-    Mod+Comma  { consume-window-into-column; }
-    // Expel the bottom window from the focused column to the right.
-    Mod+Period { expel-window-from-column; }
-
-    Mod+R { switch-preset-column-width; }
+    // ────────────────────────────────────────────────────────────────────────
+    // Resizing & Layout
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+R       { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
-    Mod+Ctrl+R { reset-window-height; }
-    Mod+F { maximize-column; }
+    Mod+Ctrl+R  { reset-window-height; }
+    Mod+F       { maximize-column; }
     Mod+Shift+F { toggle-windowed-fullscreen; }
+    Mod+Ctrl+F  { expand-column-to-available-width; }
+    Mod+C       { center-column; }
+    Mod+Ctrl+C  { center-visible-columns; }
+    Mod+W       { toggle-column-tabbed-display; }
 
-    // Expand the focused column to space not taken up by other fully visible columns.
-    // Makes the column "fill the rest of the space".
-    Mod+Ctrl+F { expand-column-to-available-width; }
-
-    Mod+C { center-column; }
-
-    // Center all fully visible columns on screen.
-    Mod+Ctrl+C { center-visible-columns; }
-
-    // Finer width adjustments.
-    // This command can also:
-    // * set width in pixels: "1000"
-    // * adjust width in pixels: "-5" or "+5"
-    // * set width as a percentage of screen width: "25%"
-    // * adjust width as a percentage of screen width: "-10%" or "+10%"
-    // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
-    // set-column-width "100" will make the column occupy 200 physical screen pixels.
+    // Fine-grained width adjustments
     Mod+Minus { set-column-width "-10%"; }
     Mod+Equal { set-column-width "+10%"; }
 
-    // Finer height adjustments when in column with other windows.
+    // Fine-grained height adjustments
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
 
-    // Move the focused window between the floating and the tiling layout.
-    Mod+V       { toggle-window-floating; }
-    // Mod+Shift+V { switch-focus-between-floating-and-tiling; }
-    
-    // Clipboard integration with macOS host
-    Mod+Shift+C hotkey-overlay-title="Copy to macOS clipboard" { spawn "copy-to-mac"; }
+    // ────────────────────────────────────────────────────────────────────────
+    // Floating Windows
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+V { toggle-window-floating; }
+
+    // ────────────────────────────────────────────────────────────────────────
+    // Clipboard Integration (macOS host)
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+Shift+C hotkey-overlay-title="Copy to macOS clipboard"   { spawn "copy-to-mac"; }
     Mod+Shift+V hotkey-overlay-title="Paste from macOS clipboard" { spawn "paste-from-mac"; }
 
-    // Toggle tabbed column display mode.
-    // Windows in this column will appear as vertical tabs,
-    // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
-
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
-    // Mod+Space       { switch-layout "next"; }
-    // Mod+Shift+Space { switch-layout "prev"; }
-
-    Print { screenshot; }
+    // ────────────────────────────────────────────────────────────────────────
+    // Screenshots
+    // ────────────────────────────────────────────────────────────────────────
+    Print      { screenshot; }
     Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Alt+Print  { screenshot-window; }
 
-    // Applications such as remote-desktop clients and software KVM switches may
-    // request that niri stops processing the keyboard shortcuts defined here
-    // so they may, for example, forward the key presses as-is to a remote machine.
-    // It's a good idea to bind an escape hatch to toggle the inhibitor,
-    // so a buggy application can't hold your session hostage.
-    //
-    // The allow-inhibiting=false property can be applied to other binds as well,
-    // which ensures niri always processes them, even when an inhibitor is active.
-    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-
-    // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E { quit; }
-    Ctrl+Alt+Delete { quit; }
-
-    // Powers off the monitors. To turn them back on, do any input like
-    // moving the mouse or pressing any other key.
-    Mod+Shift+P { power-off-monitors; }
+    // ────────────────────────────────────────────────────────────────────────
+    // System Controls
+    // ────────────────────────────────────────────────────────────────────────
+    Mod+Ctrl+Shift+R hotkey-overlay-title="Reload niri config" { spawn "sh" "-c" "niri msg reload-config"; }
+    Mod+Escape allow-inhibiting=false                           { toggle-keyboard-shortcuts-inhibit; }
+    Mod+Shift+E                                                 { quit; }
+    Ctrl+Alt+Delete                                             { quit; }
+    Mod+Shift+P                                                 { power-off-monitors; }
 }

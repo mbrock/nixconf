@@ -4,7 +4,10 @@
   systemd.user.services.nt = {
     Unit = {
       Description = "Node.Town Server";
-      After = [ "network.target" "agenix.service" ];
+      After = [
+        "network.target"
+        "agenix.service"
+      ];
       Wants = [ "agenix.service" ];
     };
 
@@ -22,7 +25,7 @@
       ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
       Restart = "on-failure";
       RestartSec = "5s";
-      
+
       # Environment variables including dedicated data directory
       Environment = [
         "HOME=%h"
@@ -30,10 +33,10 @@
         "NT_DATA_DIR=%h/.local/state/nt_data_service"
         "NT_IMAGES_DIR=%h/.local/share/nt_images"
       ];
-      
+
       # Load secrets from agenix (using absolute path since systemd doesn't expand variables)
       EnvironmentFile = "/run/user/1000/agenix/nt-api-keys";
-      
+
       # Send output to journal
       StandardOutput = "journal";
       StandardError = "journal";

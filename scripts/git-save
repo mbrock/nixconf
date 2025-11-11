@@ -1,0 +1,3 @@
+#!/bin/sh
+git add -A
+git diff HEAD --quiet || git summary | git commit -F-

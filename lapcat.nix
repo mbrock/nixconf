@@ -1,7 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ./nixos-base.nix ];
-  
+
   networking.hostName = "lapcat";
 }

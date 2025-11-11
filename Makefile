@@ -1,34 +1,35 @@
 .PHONY: all nixos home switch
 
-# Default target: rebuild both NixOS and Home Manager
+# Default target: rebuild system with flake (includes NixOS + Home Manager)
 all: switch
 
-# Rebuild NixOS configuration
+# Rebuild NixOS configuration (flake-based, includes Home Manager)
 nixos:
-	sudo nixos-rebuild switch
+	sudo nixos-rebuild switch --flake .#lapland
 
-# Rebuild Home Manager configuration
+# Rebuild Home Manager configuration (now integrated via flake)
 home:
-	home-manager switch
+	sudo nixos-rebuild switch --flake .#lapland
 
-# Rebuild both (NixOS first, then Home Manager)
-switch: nixos home
+# Rebuild both (NixOS + Home Manager via flake)
+switch:
+	sudo nixos-rebuild switch --flake .#lapland -L
 
 # Test NixOS configuration without switching
 test:
-	sudo nixos-rebuild test
+	sudo nixos-rebuild test --flake .#lapland
 
 # Build NixOS configuration without switching
 build:
-	sudo nixos-rebuild build
+	sudo nixos-rebuild build --flake .#lapland
 
 # Dry run for NixOS
 dry-run:
-	sudo nixos-rebuild dry-run
+	sudo nixos-rebuild dry-run --flake .#lapland
 
-# Update NixOS channels
+# Update flake inputs
 update:
-	sudo nix-channel --update
+	nix flake update
 
 # Garbage collection
 gc:
@@ -45,7 +46,7 @@ rollback:
 
 # Format nix files
 fmt:
-	nixpkgs-fmt *.nix
+	find . -name '*.nix' -type f | xargs nix fmt
 
 # Edit configurations
 edit:
