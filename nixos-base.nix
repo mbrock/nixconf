@@ -103,6 +103,7 @@
     # Build script for make with conditional window behavior
     (writeShellScriptBin "conf-build" ''
       cd ~/conf
+      git save
       echo "Building configuration..."
       if make; then
         exit 0
@@ -327,8 +328,8 @@
       cursor_text_color #0a0a0a
 
       # Black
-      color0 #1a1a1a
-      color8 #555555
+      color0 #2a2a2a
+      color8 #888888
 
       # Red
       color1 #cd5c5c
@@ -355,8 +356,8 @@
       color14 #87ceeb
 
       # White
-      color7 #cccccc
-      color15 #e8e8e8
+      color7 #dddddd
+      color15 #f0f0f0
 
       # Tab bar
       tab_bar_style powerline
