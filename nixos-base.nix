@@ -50,7 +50,7 @@
         exit 1
       fi
       
-      if echo "$content" | ssh mikaels-macbook-air pbcopy; then
+      if echo "$content" | ssh mikaels-mac-mini-2 pbcopy; then
         # Check if content is text and create preview
         if echo "$content" | grep -q "[^[:print:][:space:]]"; then
           preview="(binary content)"

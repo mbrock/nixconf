@@ -5,26 +5,26 @@
 (column-number-mode 1)
 
 ;; Configure backup and auto-save files to avoid ~ files everywhere
-(let ((backup-dir (expand-file-name "~/.cache/emacs/backups/")))
-  (unless (file-exists-p backup-dir)
-    (make-directory backup-dir t)))
+;; (let ((backup-dir (expand-file-name "~/.cache/emacs/backups/")))
+;;   (unless (file-exists-p backup-dir)
+;;     (make-directory backup-dir t)))
 
-(let ((auto-save-dir (expand-file-name "~/.cache/emacs/auto-saves/")))
-  (unless (file-exists-p auto-save-dir)
-    (make-directory auto-save-dir t)))
+;; (let ((auto-save-dir (expand-file-name "~/.cache/emacs/auto-saves/")))
+;;   (unless (file-exists-p auto-save-dir)
+;;     (make-directory auto-save-dir t)))
 
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "~/.cache/emacs/backups/"))))
+;; (setq backup-directory-alist
+;;       `(("." . ,(expand-file-name "~/.cache/emacs/backups/"))))
 
-(setq auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "~/.cache/emacs/auto-saves/") t)))
+;; (setq auto-save-file-name-transforms
+;;       `((".*" ,(expand-file-name "~/.cache/emacs/auto-saves/") t)))
 
-(setq version-control t
-      kept-new-versions 10
-      kept-old-versions 5
-      delete-old-versions t
-      vc-make-backup-files t
-      create-lockfiles nil)
+;; (setq version-control t
+;;       kept-new-versions 10
+;;       kept-old-versions 5
+;;       delete-old-versions t
+;;       vc-make-backup-files t
+;;       create-lockfiles nil)
 
 (add-to-list 'default-frame-alist '(undecorated . t))
 
@@ -33,14 +33,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(indent-tabs-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "iosevka" :width expanded :slant normal :weight normal 
-			:height 195 :background "#100010" :foreground "ivory"))))
+ '(default ((t (:family "iosevka" :width expanded :slant normal :weight normal :height 195 :background "#100010" :foreground "ivory"))))
  '(fringe ((t nil)))
  '(mode-line ((t (:background "#003355" :foreground "#cccccc" :box (:line-width (1 . 6) :color "#114466") :width condensed))))
  '(mode-line-inactive ((t (:background "#002233" :foreground "#888888" :box (:line-width (1 . 6) :color "#002233"))))))
@@ -49,8 +49,8 @@
 
 (global-auto-revert-mode 1)
 
-(require 'lsp-bridge)
-(global-lsp-bridge-mode)
+;(require 'lsp-bridge)
+;(global-lsp-bridge-mode)
 
 (require 'sweeprolog)
 
