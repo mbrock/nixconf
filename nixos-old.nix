@@ -10,7 +10,6 @@
 
   hardware.graphics.enable = true;
 
-  # Combined system and user packages
   environment.systemPackages = with pkgs; [
     waybar
     kitty
@@ -67,7 +66,10 @@
         ))
       ]
     ))
+#    sbcl
+#    nodejs_24
     git
+#    uv
     gnumake
 
     # Language servers for eglot
@@ -81,12 +83,10 @@
     swayimg
     wl-clipboard
     libnotify
+#    chromium
     ripgrep
-    swaybg
+     swaybg
     claude-code
-
-    # Additional packages from Home Manager
-    font-manager
 
     # Terminal wrapper
     (writeShellScriptBin "term" ''
@@ -190,19 +190,8 @@
     '')
   ];
 
-  # System-wide programs
   programs.niri.enable = true;
   programs.nix-ld.enable = true;
-  programs.direnv.enable = true;
-  programs.starship.enable = true;
-
-  # Bash configuration system-wide
-  programs.bash = {
-    interactiveShellInit = ''
-      alias ls='ls --color=auto'
-      alias grep='grep --color=auto'
-    '';
-  };
 
   # Configure greetd for autologin
   services.greetd = {
@@ -238,7 +227,11 @@
   services.xserver.xkb.options = "ctrl:nocaps";
 
   fonts.packages = with pkgs; [
+ #   nerd-fonts.iosevka
+ #   iosevka
+ #   font-awesome
     jetbrains-mono
+#    input-fonts
   ];
 
   fonts.fontconfig.enable = true;
@@ -262,116 +255,7 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  # User environment setup
-  environment.etc."npmrc" = {
-    text = ''
-      prefix=~/.local
-      cache=~/.cache/npm
-    '';
-    user = "mbrock";
-  };
-
-  # Session variables
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    EDITOR = "emacs";
-  };
-
-  # Mako notification daemon as a systemd user service
-  systemd.user.services.mako = {
-    description = "Mako notification daemon";
-    wantedBy = [ "graphical-session.target" ];
-    partOf = [ "graphical-session.target" ];
-    serviceConfig = {
-      Type = "dbus";
-      BusName = "org.freedesktop.Notifications";
-      ExecStart = "${pkgs.mako}/bin/mako";
-      RestartSec = 5;
-      Restart = "always";
-    };
-  };
-
-  # Create mako config
-  environment.etc."xdg/mako/config" = {
-    text = ''
-      default-timeout=3000
-      border-size=3
-      border-radius=12
-      border-color=#daa520
-      background-color=#1a1510
-      text-color=#e8d5b7
-      font=JetBrains Mono 12
-      padding=20
-      width=700
-      anchor=center
-    '';
-  };
-
-  # Kitty configuration for all users
-  environment.etc."xdg/kitty/kitty.conf" = {
-    text = ''
-      # Font
-      font_family JetBrains Mono
-      font_size 18
-
-      # Window appearance
-      background_opacity 0.90
-      window_padding_width 8
-
-      # Colors - Subtle warm theme
-      background #0a0a0a
-      foreground #e8e8e8
-      selection_background #444444
-      selection_foreground #e8e8e8
-      cursor #cccccc
-      cursor_text_color #0a0a0a
-
-      # Black
-      color0 #1a1a1a
-      color8 #555555
-
-      # Red
-      color1 #cd5c5c
-      color9 #ff6347
-
-      # Green
-      color2 #9acd32
-      color10 #adff2f
-
-      # Yellow
-      color3 #d4af37
-      color11 #ffd700
-
-      # Blue
-      color4 #6495ed
-      color12 #87ceeb
-
-      # Magenta
-      color5 #ba55d3
-      color13 #da70d6
-
-      # Cyan
-      color6 #5fcbd8
-      color14 #87ceeb
-
-      # White
-      color7 #cccccc
-      color15 #e8e8e8
-
-      # Tab bar
-      tab_bar_style powerline
-      tab_bar_background #0a0a0a
-      active_tab_foreground #0a0a0a
-      active_tab_background #cccccc
-      inactive_tab_foreground #888888
-      inactive_tab_background #2a2a2a
-
-      # Performance
-      repaint_delay 10
-      input_delay 3
-      sync_to_monitor yes
-    '';
-  };
-
   system.stateVersion = "25.05"; # never change or delete
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
