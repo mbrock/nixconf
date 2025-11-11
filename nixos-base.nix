@@ -34,9 +34,9 @@
         nix-mode
         paredit
         sly
-#        cmake-mode
-#        meson-mode
-#        llvm-mode
+        cmake-mode
+        meson-mode
+        llvm-mode
 
         # Environment & tools
         envrc
@@ -74,10 +74,10 @@
 
     # Language servers for eglot
     nixd
-#    clang-tools # provides clangd
-#    cmake-language-server
-#    mesonlsp
-#    llvmPackages.mlir # provides mlir-lsp-server for LLVM IR
+    clang-tools # provides clangd
+    cmake-language-server
+    mesonlsp
+    llvmPackages.mlir # provides mlir-lsp-server for LLVM IR
 
     xwayland-satellite
     swayimg
