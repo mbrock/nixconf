@@ -1,17 +1,9 @@
-.PHONY: all nixos home switch
+.PHONY: all switch
 
-# Default target: rebuild system with flake (includes NixOS + Home Manager)
+# Default target: rebuild system with flake
 all: switch
 
-# Rebuild NixOS configuration (flake-based, includes Home Manager)
-nixos:
-	sudo nixos-rebuild switch --flake .#lapland
-
-# Rebuild Home Manager configuration (now integrated via flake)
-home:
-	sudo nixos-rebuild switch --flake .#lapland
-
-# Rebuild both (NixOS + Home Manager via flake)
+# Rebuild NixOS configuration
 switch:
 	sudo nixos-rebuild switch --flake .#lapland -L
 
@@ -50,4 +42,4 @@ fmt:
 
 # Edit configurations
 edit:
-	$$EDITOR nixos.nix home.nix niri.kdl
+	$$EDITOR nixos-base.nix niri.kdl
