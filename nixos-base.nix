@@ -328,8 +328,8 @@
       cursor_text_color #0a0a0a
 
       # Black
-      color0 #2a2a2a
-      color8 #888888
+      color0 #404040
+      color8 #aaaaaa
 
       # Red
       color1 #cd5c5c
