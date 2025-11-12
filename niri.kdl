@@ -32,7 +32,7 @@ output "Virtual-1" {
 // ============================================================================
 
 layout {
-    gaps 20
+    gaps 10
     background-color "#1a1510"
     center-focused-column "on-overflow"
 
@@ -94,7 +94,7 @@ animations {
 
 // Default window appearance
 window-rule {
-    geometry-corner-radius 12
+    geometry-corner-radius 8
     clip-to-geometry true
     tiled-state true
 }

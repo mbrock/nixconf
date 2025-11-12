@@ -83,7 +83,7 @@
     libnotify
     ripgrep
     swaybg
-    claude-code
+    bun
 
     # Additional packages from Home Manager
     font-manager
