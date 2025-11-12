@@ -83,7 +83,6 @@
     libnotify
     ripgrep
     swaybg
-    nodejs
 
     # Additional packages from Home Manager
     font-manager
