@@ -94,7 +94,6 @@ in
       exec kitty "$@"
     '')
 
-    # Build script for make with conditional window behavior
     (writeShellScriptBin "conf-build" ''
       cd ~/conf
       git save
@@ -131,61 +130,6 @@ in
       git diff HEAD --quiet || git summary | git commit -F-
     '')
 
-    # Clipboard integration scripts
-    (writeShellScriptBin "copy-to-mac" ''
-      # Copy from Wayland clipboard to macOS clipboard
-      content=$(${wl-clipboard}/bin/wl-paste 2>/dev/null || echo "")
-
-      if [ -z "$content" ]; then
-        ${libnotify}/bin/notify-send -t 2000 -u critical "❌ Copy Failed" "No content in clipboard"
-        exit 1
-      fi
-
-      if echo "$content" | ssh mikaels-mac-mini-2 pbcopy; then
-        # Check if content is text and create preview
-        if echo "$content" | grep -q "[^[:print:][:space:]]"; then
-          preview="(binary content)"
-        else
-          # Truncate to 50 chars and add ellipsis if needed
-          preview=$(echo "$content" | tr '\n' ' ' | sed 's/[[:space:]]\+/ /g' | cut -c1-50)
-          if [ ''${#content} -gt 50 ]; then
-            preview="$preview..."
-          fi
-        fi
-        ${libnotify}/bin/notify-send -t 2000 "📋 Copied to Mac" "$preview"
-      else
-        ${libnotify}/bin/notify-send -t 2000 -u critical "❌ Copy Failed" "Could not sync to macOS clipboard"
-      fi
-    '')
-
-    (writeShellScriptBin "paste-from-mac" ''
-      # Paste from macOS clipboard to Wayland clipboard
-      content=$(ssh mikaels-macbook-air pbpaste 2>/dev/null || echo "")
-
-      if [ -z "$content" ]; then
-        ${libnotify}/bin/notify-send -t 2000 -u critical "❌ Paste Failed" "No content in macOS clipboard"
-        exit 1
-      fi
-
-      if echo "$content" | ${wl-clipboard}/bin/wl-copy; then
-        # Check if content is text and create preview
-        if echo "$content" | grep -q "[^[:print:][:space:]]"; then
-          preview="(binary content)"
-        else
-          # Truncate to 50 chars and add ellipsis if needed
-          preview=$(echo "$content" | tr '\n' ' ' | sed 's/[[:space:]]\+/ /g' | cut -c1-50)
-          if [ ''${#content} -gt 50 ]; then
-            preview="$preview..."
-          fi
-        fi
-        ${libnotify}/bin/notify-send -t 2000 "📋 Pasted from Mac" "$preview"
-      else
-        ${libnotify}/bin/notify-send -t 2000 -u critical "❌ Paste Failed" "Could not sync from macOS clipboard"
-      fi
-    '')
-  ]);
-
-  # System-wide programs
   programs.niri.enable = true;
   programs.nix-ld.enable = true;
   programs.direnv.enable = true;
@@ -198,18 +142,13 @@ in
     "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
   ];
 
-  # User config symlinks managed by NixOS
   systemd.tmpfiles.rules = [
-    # Create directories
     "d /home/mbrock/.emacs.d 0700 mbrock users"
     "d /home/mbrock/.config/niri 0700 mbrock users"
-
-    # Create symlinks to conf repo
     "L+ /home/mbrock/.emacs.d/init.el - - - - /home/mbrock/conf/emacs.el"
     "L+ /home/mbrock/.config/niri/config.kdl - - - - /home/mbrock/conf/niri.kdl"
   ];
 
-  # Bash configuration system-wide
   programs.bash = {
     interactiveShellInit = ''
       alias ls='ls --color=auto'
@@ -217,7 +156,6 @@ in
     '';
   };
 
-  # Configure greetd for autologin
   services.greetd = {
     enable = true;
     settings = {
@@ -312,7 +250,6 @@ in
 
   security.sudo.wheelNeedsPassword = false;
 
-  # User environment setup
   environment.etc."npmrc" = {
     text = ''
       prefix=~/.local
@@ -321,13 +258,11 @@ in
     user = "mbrock";
   };
 
-  # Session variables
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     EDITOR = "emacs";
   };
 
-  # Mako notification daemon as a systemd user service
   systemd.user.services.mako = {
     description = "Mako notification daemon";
     wantedBy = [ "graphical-session.target" ];
@@ -341,7 +276,6 @@ in
     };
   };
 
-  # Create mako config
   environment.etc."xdg/mako/config" = {
     text = ''
       default-timeout=3000
@@ -357,7 +291,6 @@ in
     '';
   };
 
-  # Kitty configuration for all users
   environment.etc."xdg/kitty/kitty.conf" = {
     text = ''
       # Font
@@ -375,64 +308,40 @@ in
       selection_foreground #e8e8e8
       cursor #cccccc
       cursor_text_color #0a0a0a
-
       # Black
       color0 #404040
       color8 #aaaaaa
-
       # Red
       color1 #cd5c5c
       color9 #ff6347
-
       # Green
       color2 #9acd32
       color10 #adff2f
-
       # Yellow
       color3 #d4af37
       color11 #ffd700
-
       # Blue
       color4 #8ab4f8
       color12 #aecbfa
-
       # Magenta
       color5 #ba55d3
       color13 #da70d6
-
       # Cyan
       color6 #5fcbd8
       color14 #87ceeb
-
       # White
       color7 #dddddd
       color15 #f0f0f0
 
-      # Tab bar
       tab_bar_style powerline
       tab_bar_background #0a0a0a
       active_tab_foreground #0a0a0a
       active_tab_background #cccccc
       inactive_tab_foreground #888888
       inactive_tab_background #2a2a2a
-
-      # Performance
       repaint_delay 10
       input_delay 3
       sync_to_monitor yes
-    '';
-  };
-
-  # Ghostty configuration for all users
-  environment.etc."xdg/ghostty/config" = {
-    text = ''
-      font-family = iosevka term extended
-      font-size = 20
-      freetype-load-flags = no-hinting
-      background = #000000
-      window-padding-x = 8
-      window-padding-y = 8
-      window-padding-balance = true
     '';
   };
 
