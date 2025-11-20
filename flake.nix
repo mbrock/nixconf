@@ -17,7 +17,12 @@
         determinate.nixosModules.default
         ./nixos-base.nix
         ./hardware-configuration.nix
-        { networking.hostName = "lapland"; }
+        {
+          networking.hostName = "lapland";
+          # Reduce parallelism to avoid OOM on this VM
+          nix.settings.max-jobs = 2;
+          nix.settings.cores = 2;
+        }
       ];
     };
 
