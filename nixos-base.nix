@@ -248,10 +248,14 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.input-fonts.acceptLicense = true;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    download-buffer-size = 64 * 1024 * 1024;  # 64MB
+    builders-use-substitutes = true;
+  };
 
   nix.buildMachines = [
     {
@@ -271,7 +275,6 @@
   ];
 
   nix.distributedBuilds = true;
-  nix.settings.builders-use-substitutes = true;
 
   users.users.mbrock = {
     isNormalUser = true;
