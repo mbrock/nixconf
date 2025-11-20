@@ -277,6 +277,8 @@ in
     ];
     download-buffer-size = 64 * 1024 * 1024;  # 64MB
     builders-use-substitutes = true;
+
+    eval-cores = 4;
   };
 
   nix.buildMachines = [
