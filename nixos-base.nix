@@ -34,42 +34,28 @@ in
     
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       e: with e; [
-        # AI assistant
-        gptelPackage
-
-        # Core packages
-        use-package
-
-        # Version control
-        magit
-        diff-hl
-
-        # Completion & minibuffer
-        vertico
-        orderless
-        consult
-        embark
-        marginalia
-        company
-
-        # Language support
-        nix-mode
-        paredit
-        sly
         cmake-mode
-        meson-mode
-        llvm-mode
-
-        # Environment & tools
-        envrc
-        eat
-
-        # UI enhancements
-        rainbow-delimiters
-        which-key
+        company
+        consult
+        diff-hl
         dired-hide-dotfiles
+        eat
+        embark
+        envrc
+        gptelPackage
+        llvm-mode
+        magit
+        marginalia
+        meson-mode
+        nix-mode
+        orderless
+        paredit
+        rainbow-delimiters
+        sly
+        use-package
+        vertico
+        which-key
 
-        # Treesit grammars for better syntax highlighting
         (treesit-grammars.with-grammars (
           gs: with gs; [
             tree-sitter-bash
@@ -234,7 +220,7 @@ in
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session";
         user = "greeter";
       };
       initial_session = {
