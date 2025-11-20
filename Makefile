@@ -1,45 +1,10 @@
-.PHONY: all switch
-
-# Default target: rebuild system with flake
+.PHONY: all switch build dry-run update gc rollback fmt edit
 all: switch
-
-# Rebuild NixOS configuration
-switch:
-	sudo nixos-rebuild switch --flake .#lapland -L
-
-# Test NixOS configuration without switching
-test:
-	sudo nixos-rebuild test --flake .#lapland
-
-# Build NixOS configuration without switching
-build:
-	sudo nixos-rebuild build --flake .#lapland
-
-# Dry run for NixOS
-dry-run:
-	sudo nixos-rebuild dry-run --flake .#lapland
-
-# Update flake inputs
-update:
-	nix flake update
-
-# Garbage collection
-gc:
-	sudo nix-collect-garbage -d
-	nix-collect-garbage -d
-
-# Show current system generation
-generation:
-	sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
-
-# Rollback to previous generation
-rollback:
-	sudo nixos-rebuild switch --rollback
-
-# Format nix files
-fmt:
-	find . -name '*.nix' -type f | xargs nix fmt
-
-# Edit configurations
-edit:
-	$$EDITOR nixos-base.nix niri.kdl
+switch:; sudo nixos-rebuild switch --flake . -L
+build:; sudo nixos-rebuild build --flake .#lapland
+dry-run:; sudo nixos-rebuild dry-run --flake .#lapland
+update:; nix flake update
+gc:; sudo nix-collect-garbage -d
+rollback:; sudo nixos-rebuild switch --rollback
+fmt:; find . -name '*.nix' -type f | xargs nix fmt
+edit:; $$EDITOR nixos-base.nix niri.kdl

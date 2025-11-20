@@ -27,11 +27,7 @@ in
   environment.systemPackages = [
     ghostty.packages.${system}.default
     nom.packages.${system}.default
-  ] ++ (with pkgs; [
-    waybar
-    kitty
-    chromium
-    
+  ] ++ (with pkgs; [    
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       e: with e; [
         cmake-mode
@@ -74,28 +70,27 @@ in
         ))
       ]
     ))
-    git
-    gh
-    gnumake
 
-    # Language servers for eglot
-    nixd
+    chromium
     clang-tools # provides clangd
     cmake-language-server
-    mesonlsp
-    llvmPackages.mlir # provides mlir-lsp-server for LLVM IR
-
-    xwayland-satellite
-    swayimg
-    wl-clipboard
+    font-manager
+    fuzzel
+    gh
+    git
+    gnumake
+    kitty
     libnotify
+    llvmPackages.mlir # provides mlir-lsp-server for LLVM IR
+    mesonlsp
+    nixd
     ripgrep
     swaybg
+    swayimg
+    waybar
+    wl-clipboard
+    xwayland-satellite
 
-    # Additional packages from Home Manager
-    font-manager
-
-    # Terminal wrapper
     (writeShellScriptBin "term" ''
       exec ghostty "$@"
     '')
@@ -195,6 +190,8 @@ in
   programs.niri.enable = true;
   programs.nix-ld.enable = true;
   programs.direnv.enable = true;
+  programs._1password.enable = true;
+  programs._1password-gui.enable = true;
 
   # User config symlinks managed by NixOS
   systemd.tmpfiles.rules = [
