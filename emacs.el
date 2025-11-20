@@ -246,13 +246,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; gptel - LLM interaction in Emacs
 
-(add-to-list 'load-path "~/src/gptel")
 (require 'gptel)
 (require 'gptel-anthropic)
 (require 'gptel-openai)
 
 (use-package gptel
-  :ensure nil  ;; we're loading from ~/src/gptel
+  :ensure nil  ;; loaded from nixpkgs
   :custom
   ;; API keys are loaded from ~/.authinfo
   (gptel-api-key #'gptel-api-key-from-auth-source)

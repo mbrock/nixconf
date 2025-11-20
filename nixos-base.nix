@@ -3,9 +3,19 @@
   lib,
   pkgs,
   nom,
+  gptel,
   ...
 }:
 
+let
+  # Create emacs package for gptel from flake input
+  gptelPackage = pkgs.emacsPackages.trivialBuild {
+    pname = "gptel";
+    version = "0.9.6";
+    src = gptel;
+    packageRequires = with pkgs.emacsPackages; [ ];
+  };
+in
 {
 
   hardware.graphics.enable = true;
@@ -17,6 +27,10 @@
     kitty
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       e: with e; [
+        # AI assistant
+        gptelPackage
+
+
         # Core packages
         use-package
 
