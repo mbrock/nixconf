@@ -191,6 +191,12 @@ in
   programs.direnv.enable = true;
   programs._1password.enable = true;
   programs._1password-gui.enable = true;
+  programs.chromium.enable = true;
+
+  programs.chromium.extensions = [
+    "gejiddohjgogedgjnonbofjigllpkmbf" # 1password
+    "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
+  ];
 
   # User config symlinks managed by NixOS
   systemd.tmpfiles.rules = [
