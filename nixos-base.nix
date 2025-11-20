@@ -129,7 +129,7 @@ in
       git add -A
       git diff HEAD --quiet || git summary | git commit -F-
     '')
-  ];
+  ]);
 
   programs.niri.enable = true;
   programs.nix-ld.enable = true;
