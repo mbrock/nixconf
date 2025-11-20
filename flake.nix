@@ -10,7 +10,18 @@
       modules = [
         determinate.nixosModules.default
         ./nixos-base.nix
+        ./hardware-configuration.nix
         { networking.hostName = "lapland"; }
+      ];
+    };
+
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      modules = [
+        determinate.nixosModules.default
+        ./nixos-base.nix
+        ./hardware-configuration-nixos.nix
+        { networking.hostName = "nixos"; }
       ];
     };
 
