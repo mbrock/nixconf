@@ -196,7 +196,6 @@
   programs.niri.enable = true;
   programs.nix-ld.enable = true;
   programs.direnv.enable = true;
-  programs.starship.enable = true;
 
   # User config symlinks managed by NixOS
   systemd.tmpfiles.rules = [
