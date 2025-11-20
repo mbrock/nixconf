@@ -416,5 +416,18 @@ in
     '';
   };
 
+  # Ghostty configuration for all users
+  environment.etc."xdg/ghostty/config" = {
+    text = ''
+      font-family = iosevka term extended
+      font-size = 20
+      freetype-load-flags = no-hinting
+      background = #000000
+      window-padding-x = 8
+      window-padding-y = 8
+      window-padding-balance = true
+    '';
+  };
+
   system.stateVersion = "25.05"; # never change or delete
 }
