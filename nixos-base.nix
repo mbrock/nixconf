@@ -198,8 +198,10 @@
   programs.direnv.enable = true;
   programs.starship.enable = true;
 
-  # Niri configuration - users should symlink ~/.config/niri/config.kdl -> ~/conf/niri.kdl
-  # This ensures live config editing and reload with Mod+Ctrl+Shift+R
+  # Niri configuration
+  environment.etc."xdg/niri/config.kdl" = {
+    source = ./niri.kdl;
+  };
 
   # Bash configuration system-wide
   programs.bash = {
