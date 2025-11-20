@@ -10,7 +10,7 @@
   };
 
   inputs.ghostty.url = "github:ghostty-org/ghostty";
-  inputs.ghostty.follows.nixpkgs = "nixpkgs";
+  inputs.ghostty.follows = "nixpkgs";
 
   outputs = { self, nixpkgs, determinate, nom, gptel, ghostty, ... }: {
     nixosConfigurations.lapland = nixpkgs.lib.nixosSystem {
