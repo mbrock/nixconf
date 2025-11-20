@@ -198,6 +198,11 @@
   programs.direnv.enable = true;
   programs.starship.enable = true;
 
+  # Niri configuration
+  environment.etc."xdg/niri/config.kdl" = {
+    source = ./niri.kdl;
+  };
+
   # Bash configuration system-wide
   programs.bash = {
     interactiveShellInit = ''
