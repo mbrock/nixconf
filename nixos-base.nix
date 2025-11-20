@@ -198,10 +198,16 @@
   programs.direnv.enable = true;
   programs.starship.enable = true;
 
-  # Niri configuration
-  environment.etc."xdg/niri/config.kdl" = {
-    source = ./niri.kdl;
-  };
+  # User config symlinks managed by NixOS
+  systemd.tmpfiles.rules = [
+    # Create directories
+    "d /home/mbrock/.emacs.d 0700 mbrock users"
+    "d /home/mbrock/.config/niri 0700 mbrock users"
+
+    # Create symlinks to conf repo
+    "L+ /home/mbrock/.emacs.d/init.el - - - - /home/mbrock/conf/emacs.el"
+    "L+ /home/mbrock/.config/niri/config.kdl - - - - /home/mbrock/conf/niri.kdl"
+  ];
 
   # Bash configuration system-wide
   programs.bash = {
