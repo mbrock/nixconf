@@ -76,6 +76,7 @@ in
     cmake-language-server
     font-manager
     fuzzel
+    fh
     gh
     git
     gnumake
