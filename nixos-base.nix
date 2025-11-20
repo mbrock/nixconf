@@ -25,6 +25,7 @@ in
     nom.packages.${pkgs.system}.default
     waybar
     kitty
+    ghostty
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       e: with e; [
         # AI assistant
@@ -105,14 +106,7 @@ in
 
     # Terminal wrapper
     (writeShellScriptBin "term" ''
-      exec ${xterm}/bin/xterm \
-        -fa "Iosevka Term Extended" \
-        -fs 26 \
-        -bg "#000000" \
-        -fg "#ffffff" \
-        -b 8 \
-        +sb \
-        "$@"
+      exec ${ghostty}/bin/ghostty "$@"
     '')
 
     # Build script for make with conditional window behavior
