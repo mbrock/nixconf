@@ -303,11 +303,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763645136,
-        "narHash": "sha256-mqMWa+7qIDKZAUDmbIhJevChFOONiZgZnQxZrJs1t6w=",
+        "lastModified": 1763645302,
+        "narHash": "sha256-W5qo/Uo0yBURy0pB2aFlnZ2sWBFZOMqlDQgOa83lTio=",
         "owner": "mbrock",
         "repo": "nix-output-monitor",
-        "rev": "c1057d9fbed70f1818039847fc63f2a16f62559e",
+        "rev": "3cf2c6e57c07745566d98bcdc79380ed146db8ab",
         "type": "github"
       },
       "original": {
