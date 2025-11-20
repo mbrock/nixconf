@@ -69,6 +69,7 @@
       ]
     ))
     git
+    gh
     gnumake
 
     # Language servers for eglot
