@@ -16,6 +16,8 @@ let
     src = gptel;
     packageRequires = with pkgs.emacsPackages; [ transient compat ];
   };
+
+  system = pkgs.stdenv.hostPlatform.system;
 in
 {
 
@@ -23,9 +25,9 @@ in
 
   # Combined system and user packages
   environment.systemPackages = [
-#    ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ghostty.packages.${system}.default
+    nom.packages.${system}.default
   ] ++ (with pkgs; [
-    nom.packages.${pkgs.system}.default
     waybar
     kitty
     chromium
@@ -109,7 +111,7 @@ in
 
     # Terminal wrapper
     (writeShellScriptBin "term" ''
-      exec ${ghostty}/bin/ghostty "$@"
+      exec ghostty "$@"
     '')
 
     # Build script for make with conditional window behavior
