@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  nom,
   ...
 }:
 
@@ -12,7 +11,6 @@
 
   # Combined system and user packages
   environment.systemPackages = with pkgs; [
-    nom.packages.${pkgs.system}.default
     waybar
     kitty
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
