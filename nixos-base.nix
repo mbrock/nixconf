@@ -23,7 +23,7 @@ in
 
   # Combined system and user packages
   environment.systemPackages = [
-    ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+#    ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
   ] ++ (with pkgs; [
     nom.packages.${pkgs.system}.default
     waybar
@@ -242,6 +242,18 @@ in
     };
   };
 
+   hardware.parallels = {
+    enable = true;
+    package = pkgs.prl-tools.overrideAttrs (
+      finalAttrs: previousAttrs: {
+        version = "26.1.2-57293";
+        src = previousAttrs.src.overrideAttrs {
+          outputHash = "sha256-0sL6uKYw/D7gYYZyAWkxcP/KbJ1rBnlXIKYDu6MlTLQ=";
+        };
+      }
+    );
+  };
+
   services.openssh.enable = true;
   services.tailscale.enable = true;
 
@@ -282,14 +294,14 @@ in
   nix.buildMachines = [
     {
       hostName = "igloo";
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+      systems = [ "x86_64-linux" ];
       maxJobs = 4;
       speedFactor = 2;
       supportedFeatures = [ "big-parallel" "kvm" ];
     }
     {
       hostName = "swa.sh";
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+      systems = [ "x86_64-linux" ];
       maxJobs = 8;
       speedFactor = 3;
       supportedFeatures = [ "big-parallel" "kvm" ];
