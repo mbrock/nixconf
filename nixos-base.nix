@@ -4,6 +4,7 @@
   pkgs,
   nom,
   gptel,
+  ghostty,
   ...
 }:
 
@@ -21,16 +22,18 @@ in
   hardware.graphics.enable = true;
 
   # Combined system and user packages
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
+    ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ] ++ (with pkgs; [
     nom.packages.${pkgs.system}.default
     waybar
     kitty
-    ghostty
+    chromium
+    
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
       e: with e; [
         # AI assistant
         gptelPackage
-
 
         # Core packages
         use-package
@@ -198,7 +201,7 @@ in
         ${libnotify}/bin/notify-send -t 2000 -u critical "❌ Paste Failed" "Could not sync from macOS clipboard"
       fi
     '')
-  ];
+  ]);
 
   # System-wide programs
   programs.niri.enable = true;

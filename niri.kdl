@@ -23,7 +23,7 @@ input {
 // ============================================================================
 
 output "Virtual-1" {
-    scale 1.5
+    scale 1.2
     transform "normal"
     // For 7680x2160 ultrawide in Parallels on Mac mini
 }
@@ -44,7 +44,7 @@ layout {
         proportion 0.66667
     }
 
-    default-column-width { proportion 0.5; }
+    default-column-width { proportion 0.25; }
 
     // Focus ring with golden glow
     focus-ring {

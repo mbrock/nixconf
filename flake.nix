@@ -9,10 +9,12 @@
     flake = false;
   };
 
-  outputs = { self, nixpkgs, determinate, nom, gptel, ... }: {
+  inputs.ghostty.url = "github:ghostty-org/ghostty";
+
+  outputs = { self, nixpkgs, determinate, nom, gptel, ghostty, ... }: {
     nixosConfigurations.lapland = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
-      specialArgs = { inherit nom gptel; };
+      specialArgs = { inherit nom gptel ghostty; };
       modules = [
         determinate.nixosModules.default
         ./nixos-base.nix
@@ -28,7 +30,7 @@
 
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
-      specialArgs = { inherit nom gptel; };
+      specialArgs = { inherit nom gptel ghostty; };
       modules = [
         determinate.nixosModules.default
         ./nixos-base.nix
