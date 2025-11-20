@@ -198,15 +198,8 @@
   programs.direnv.enable = true;
   programs.starship.enable = true;
 
-  # Niri configuration
-  environment.etc."xdg/niri/config.kdl" = {
-    source = ./niri.kdl;
-  };
-
-  # Remove auto-generated user niri config to use system config
-  systemd.tmpfiles.rules = [
-    "r /home/mbrock/.config/niri/config.kdl"
-  ];
+  # Niri configuration - users should symlink ~/.config/niri/config.kdl -> ~/conf/niri.kdl
+  # This ensures live config editing and reload with Mod+Ctrl+Shift+R
 
   # Bash configuration system-wide
   programs.bash = {
