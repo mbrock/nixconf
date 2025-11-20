@@ -2,7 +2,7 @@
   description = "NixOS configuration for lapland";
 
   inputs.determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1.897910.tar.gz";
   inputs.nom.url = "github:mbrock/nix-output-monitor";
   inputs.gptel = {
     url = "github:karthink/gptel";
