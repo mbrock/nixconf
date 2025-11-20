@@ -4,7 +4,6 @@
   pkgs,
   nom,
   gptel,
-  ghostty,
   ...
 }:
 
@@ -25,7 +24,6 @@ in
 
   # Combined system and user packages
   environment.systemPackages = [
-    ghostty.packages.${system}.default
     nom.packages.${system}.default
   ] ++ (with pkgs; [    
     ((emacsPackagesFor emacs-pgtk).emacsWithPackages (
@@ -93,7 +91,7 @@ in
     xwayland-satellite
 
     (writeShellScriptBin "term" ''
-      exec ghostty "$@"
+      exec kitty "$@"
     '')
 
     # Build script for make with conditional window behavior
