@@ -203,6 +203,11 @@
     source = ./niri.kdl;
   };
 
+  # Remove auto-generated user niri config to use system config
+  systemd.tmpfiles.rules = [
+    "r /home/mbrock/.config/niri/config.kdl"
+  ];
+
   # Bash configuration system-wide
   programs.bash = {
     interactiveShellInit = ''
