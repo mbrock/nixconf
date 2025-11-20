@@ -251,6 +251,26 @@
     "flakes"
   ];
 
+  nix.buildMachines = [
+    {
+      hostName = "igloo";
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      maxJobs = 4;
+      speedFactor = 2;
+      supportedFeatures = [ "big-parallel" "kvm" ];
+    }
+    {
+      hostName = "swa.sh";
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      maxJobs = 8;
+      speedFactor = 3;
+      supportedFeatures = [ "big-parallel" "kvm" ];
+    }
+  ];
+
+  nix.distributedBuilds = true;
+  nix.settings.builders-use-substitutes = true;
+
   users.users.mbrock = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
