@@ -13,7 +13,7 @@ let
     pname = "gptel";
     version = "0.9.6";
     src = gptel;
-    packageRequires = with pkgs.emacsPackages; [ ];
+    packageRequires = with pkgs.emacsPackages; [ transient compat ];
   };
 in
 {
